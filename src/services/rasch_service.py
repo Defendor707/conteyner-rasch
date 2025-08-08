@@ -41,38 +41,9 @@ class RaschService:
             raise
     
     def run_rasch_analysis(self, data: pd.DataFrame) -> Dict:
-        """R dasturi orqali Rasch tahlilini bajarish"""
-        try:
-            # Ma'lumotlarni CSV faylga saqlash
-            with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as f:
-                data.to_csv(f.name, index=False)
-                temp_file = f.name
-            
-            # R skriptini ishga tushirish
-            result = subprocess.run([
-                'Rscript', 
-                self.r_script_path, 
-                temp_file
-            ], capture_output=True, text=True, timeout=60)
-            
-            if result.returncode != 0:
-                logger.error(f"R skripti xatosi: {result.stderr}")
-                # Agar R skripti ishlamasa, oddiy hisoblash
-                return self.simple_analysis(data)
-            
-            # Natijalarni o'qish
-            results = self._parse_r_output(result.stdout, data)
-            
-            # Vaqtinchalik faylni o'chirish
-            os.unlink(temp_file)
-            
-            return results
-            
-        except Exception as e:
-            logger.error(f"Rasch tahlili xatosi: {str(e)}")
-            # Xatolik bo'lsa oddiy hisoblash
-            return self.simple_analysis(data)
-    
+        """1-bosqich: faqat oddiy ball hisoblash (R ishlatmasdan)"""
+        return self.simple_analysis(data)
+
     def simple_analysis(self, data: pd.DataFrame) -> Dict:
         """Oddiy statistika hisoblash (R ishlamasa)"""
         response_data = data.iloc[:, :-1].values  # student_name ustunini olib tashlash
