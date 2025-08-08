@@ -6,7 +6,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - TELEGRAM_TOKEN=8061680273:AAFqLYcHYprZHXqj3nt1UeCiZN4012yWJrE
+      - TELEGRAM_TOKEN=8061680273:AAFqLYcHYprZHXqj3nt1UeCiZN4012yWJrE8061680273:AAFqLYcHYprZHXqj3nt1UeCiZN4012yWJrE
       - DATABASE_URL=sqlite:///./data/rasch_bot.db
       - LOG_LEVEL=INFO
     volumes:
