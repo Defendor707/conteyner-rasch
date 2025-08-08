@@ -4,6 +4,7 @@ import uvicorn
 from loguru import logger
 
 from src.api.routes import router as api_router
+from threading import Thread
 from src.bot.bot import start_bot
 
 app = FastAPI(title="Rasch Bot API", version="1.0.0")
@@ -23,8 +24,8 @@ app.include_router(api_router, prefix="/api")
 @app.on_event("startup")
 async def startup_event():
     logger.info("Rasch Bot API ishga tushmoqda...")
-    # Botni ishga tushirish
-    start_bot()
+    # Botni alohida threadda ishga tushirish (API ni bloklamaslik uchun)
+    Thread(target=start_bot, daemon=True).start()
 
 @app.get("/")
 async def root():
