@@ -202,17 +202,14 @@ Karimova Malika    0    1    1    0    1
         await query.edit_message_text("✅ Tanlandi!")
     
     def run(self):
+        """Botni ishga tushirish"""
+        logger.info("Rasch Bot ishga tushmoqda...")
         import asyncio
         try:
             asyncio.get_running_loop()
         except RuntimeError:
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
-        """Botni ishga tushirish"""
-        logger.info("Rasch Bot ishga tushmoqda...")
-        import asyncio
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
         self.application.run_polling()
 
 def start_bot():
